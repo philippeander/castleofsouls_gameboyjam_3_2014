@@ -5,3 +5,5 @@ using UnityEngine;
 public class Enums : MonoBehaviour { }
 
 public enum SwardType { white, black, both }
+
+public enum Direction { up, down, left, right}

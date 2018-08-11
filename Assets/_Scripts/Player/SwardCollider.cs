@@ -11,6 +11,7 @@ public class SwardCollider : MonoBehaviour {
     
     private SwardType m_SwardType; 
     private Collider2D m_Coll;
+    [SerializeField]private string m_enemyTag = "";
 
     public SwardType Sward_Type {
         get {
@@ -19,6 +20,15 @@ public class SwardCollider : MonoBehaviour {
 
         set {
             m_SwardType = value;
+        }
+    }
+    public string EnemyTag {
+        get {
+            return m_enemyTag;
+        }
+
+        set {
+            m_enemyTag = value;
         }
     }
 
@@ -30,6 +40,10 @@ public class SwardCollider : MonoBehaviour {
         m_SwardType = SwardType.white; 
         m_Coll.enabled = false;
 	}
+
+    public void Init(string enemyTag) {
+        m_enemyTag = enemyTag;
+    }
 	
     public void SetAttack(SwardType type) {
         m_SwardType = type;
@@ -41,7 +55,7 @@ public class SwardCollider : MonoBehaviour {
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {
-        if(collision.tag == "Enemy") {
+        if(collision.tag == m_enemyTag) {
             Health health = collision.GetComponent<Health>();
             health.OnDamage(1, m_SwardType);
         }
