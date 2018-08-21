@@ -1,19 +1,49 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class EnemyAI : MonoBehaviour {
 
-    //public float floatHeight;
-    //public float liftForce;
-    //public float damping;
-    [SerializeField] private float m_SensorRadius = 3f;
-    [SerializeField] private float m_AttackRadius = 0.6f;
-    [SerializeField] private float m_RayDistance = 1f;
-    [SerializeField] private LayerMask m_WallLayerMask;
-    private Rigidbody2D rb2D;
-    private RaycastHit2D[] m_hit;
-    private Transform m_PlayerObj;
+    [Serializable]
+    public class RaycastDirection {
+        public Direction direction;
+        [NonSerialized]public Vector2 vector;
+        public RaycastHit2D raycast;
+        public bool isWallColliding = false;
+
+        public RaycastDirection(Direction direction)
+        {
+            this.direction = direction;
+
+            switch (this.direction) {
+                case Direction.up:
+                    vector = Vector2.up;
+                    break;
+                case Direction.down:
+                    vector = Vector2.down;
+                    break;
+                case Direction.left:
+                    vector = Vector2.left;
+                    break;
+                case Direction.right:
+                    vector = Vector2.right;
+                    break;
+            }
+        }
+    }
+
+    [SerializeField] protected float m_speed = 0.02f;
+    [SerializeField] protected float m_SensorRadius = 3f;
+    [SerializeField] protected float m_AttackRadius = 0.6f;
+    [SerializeField] protected float m_RayDistance = 1f;
+    [SerializeField] protected LayerMask m_WallLayerMask;
+    protected Rigidbody2D rb2D;
+    [SerializeField]protected List<RaycastDirection> m_hit; 
+    protected Transform m_PlayerObj;
+
+    private bool m_libRayCast = false;
+    protected Vector3 m_prevLoc = Vector3.zero;
 
     private const int NUM_OF_RAYCASTS = 4;
 
@@ -39,27 +69,42 @@ public class EnemyAI : MonoBehaviour {
     }
 
     protected virtual void Start() {
-        m_hit = new RaycastHit2D[NUM_OF_RAYCASTS];
+        InitRaicastDirections();
     }
 
-    void FixedUpdate() {
-        //TODO: Limitar para rodar apenas quando estiver proximo do player
+    private void InitRaicastDirections() {
+
+        m_hit.Add(new RaycastDirection(Direction.up));
+        m_hit.Add(new RaycastDirection(Direction.down));
+        m_hit.Add(new RaycastDirection(Direction.left));
+        m_hit.Add(new RaycastDirection(Direction.right));
         
-        m_hit[0] = Physics2D.Raycast(transform.position, Vector2.up, m_RayDistance, m_WallLayerMask);
-        m_hit[1] = Physics2D.Raycast(transform.position, Vector2.down, m_RayDistance, m_WallLayerMask);
-        m_hit[2] = Physics2D.Raycast(transform.position, Vector2.left, m_RayDistance, m_WallLayerMask);
-        m_hit[3] = Physics2D.Raycast(transform.position, Vector2.right, m_RayDistance, m_WallLayerMask);
+        m_libRayCast = true;
+            
+    }
+    
 
-        Debug.DrawRay(transform.position, Vector2.up * m_RayDistance, Color.red);
-        Debug.DrawRay(transform.position, Vector2.down * m_RayDistance, Color.red);
-        Debug.DrawRay(transform.position, Vector2.left * m_RayDistance, Color.red);
-        Debug.DrawRay(transform.position, Vector2.right * m_RayDistance, Color.red);
+    void FixedUpdate()
+    {
+        DrawRay();
+    }
 
-        for (int i = 0; i < m_hit.Length; i++) {
-            if (m_hit[i].collider != null) {
-                //print("OBJ: " + hit[i].transform.name.ToUpper());
-            }
+    void DrawRay() {
+
+        if (!m_libRayCast) return;
+        //TODO: Limitar para rodar apenas quando estiver proximo do player
+
+        for (int i = 0; i < m_hit.Count; i++) {
+
+            m_hit[i].raycast = Physics2D.Raycast(transform.position, m_hit[i].vector, m_RayDistance, m_WallLayerMask);
+
+            Debug.DrawRay(transform.position, m_hit[i].vector * m_RayDistance, Color.cyan);
+
+            m_hit[i].isWallColliding = m_hit[i].raycast.collider != null ? true : false;
+
+
         }
+        
 
         if (IsPlayerSeen) {
             //Debug.Log(">>> >>> THE PLAYER HAS BEEN SEEN!");
