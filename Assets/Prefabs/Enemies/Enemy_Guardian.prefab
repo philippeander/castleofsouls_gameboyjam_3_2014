@@ -72,6 +72,7 @@ GameObject:
   - component: {fileID: 4754548550261876}
   - component: {fileID: 61171607480351016}
   - component: {fileID: 50645183278234990}
+  - component: {fileID: 114660322206017658}
   - component: {fileID: 114546923039213454}
   - component: {fileID: 114196178551408722}
   m_Layer: 0
@@ -80,7 +81,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1653388862565210
 GameObject:
   m_ObjectHideFlags: 0
@@ -456,6 +457,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53829c192a7df9543a1d195d2aa2ec75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_enemyTag: 
 --- !u!114 &114196178551408722
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -467,16 +469,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0942eee0664854a49885de7169dc00ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AttackType: 1
+  m_AttackType: 0
   m_Health: 3
   m_MaxHealth: 3
-  m_IsShakeCam: 1
+  m_IsShakeCam: 0
   m_IsInvencible: 0
   m_IsPlayer: 0
   m_TimeFlashDamage: 0.1
   m_FrameHateDamage: 0.05
   m_MaxColorDamage: {r: 1, g: 1, b: 1, a: 1}
-  m_MinColorDamage: {r: 1, g: 1, b: 1, a: 0.509}
+  m_MinColorDamage: {r: 1, g: 1, b: 1, a: 0}
 --- !u!114 &114237054382263046
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -488,6 +490,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53829c192a7df9543a1d195d2aa2ec75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_enemyTag: 
 --- !u!114 &114250527567158194
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -499,6 +502,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53829c192a7df9543a1d195d2aa2ec75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_enemyTag: 
 --- !u!114 &114546923039213454
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -510,6 +514,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14718a4f1f7eb034985463baa79e1778, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_EnemyTag: Player
+  m_speed: 0.02
+  m_SensorRadius: 3
+  m_AttackRadius: 0.6
+  m_RayDistance: 1
+  m_WallLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &114621372211988612
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -519,6 +531,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 53829c192a7df9543a1d195d2aa2ec75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_enemyTag: 
+--- !u!114 &114660322206017658
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1407335248350630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ac7d648fd1a52946b7027c32f02d54e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!212 &212694245314997800

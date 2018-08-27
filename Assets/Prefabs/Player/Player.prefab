@@ -55,6 +55,7 @@ GameObject:
   - component: {fileID: 95190182355374520}
   - component: {fileID: 61269783036744516}
   - component: {fileID: 50317709015040744}
+  - component: {fileID: 114753968082533988}
   - component: {fileID: 114557519294211874}
   - component: {fileID: 114193300965807046}
   m_Layer: 0
@@ -456,6 +457,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53829c192a7df9543a1d195d2aa2ec75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_enemyTag: 
 --- !u!114 &114193300965807046
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -467,16 +469,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0942eee0664854a49885de7169dc00ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AttackType: 2
   m_Health: 3
   m_MaxHealth: 3
   m_IsShakeCam: 1
   m_IsInvencible: 0
-  m_IsPlayer: 0
+  m_IsPlayer: 1
   m_TimeFlashDamage: 0.1
   m_FrameHateDamage: 0.05
   m_MaxColorDamage: {r: 1, g: 1, b: 1, a: 1}
-  m_MinColorDamage: {r: 1, g: 1, b: 1, a: 0.5}
+  m_MinColorDamage: {r: 1, g: 1, b: 1, a: 0}
 --- !u!114 &114321332599228312
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -488,6 +489,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53829c192a7df9543a1d195d2aa2ec75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_enemyTag: 
 --- !u!114 &114491325412755762
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -499,6 +501,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53829c192a7df9543a1d195d2aa2ec75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_enemyTag: 
 --- !u!114 &114557519294211874
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -511,11 +514,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Speed: 2
-  m_RefreshRate: 0.02
   m_CollAttackTop: {fileID: 114491325412755762}
   m_CollAttackDown: {fileID: 114321332599228312}
   m_CollAttackLeft: {fileID: 114887721868096448}
   m_CollAttackRight: {fileID: 114004157737647738}
+--- !u!114 &114753968082533988
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1168847887418234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ac7d648fd1a52946b7027c32f02d54e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EnemyTag: Enemy
+  m_gunType: 2
+  m_weakAgaintGunType: 2
 --- !u!114 &114887721868096448
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -527,6 +543,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53829c192a7df9543a1d195d2aa2ec75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_enemyTag: 
 --- !u!212 &212889144256803222
 SpriteRenderer:
   m_ObjectHideFlags: 1

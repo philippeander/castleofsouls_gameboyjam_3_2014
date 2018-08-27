@@ -86,6 +86,7 @@ GameObject:
   - component: {fileID: 4395577736278166}
   - component: {fileID: 61429823838036798}
   - component: {fileID: 50404838302042438}
+  - component: {fileID: 114136969789063772}
   - component: {fileID: 114614032115512528}
   - component: {fileID: 114100677424299448}
   m_Layer: 0
@@ -159,7 +160,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1809977908958368}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1, y: -2.53, z: 0}
+  m_LocalPosition: {x: 8.75, y: -2.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4073484280109308}
@@ -337,7 +338,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0942eee0664854a49885de7169dc00ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AttackType: 1
   m_Health: 3
   m_MaxHealth: 3
   m_IsShakeCam: 1
@@ -346,7 +346,21 @@ MonoBehaviour:
   m_TimeFlashDamage: 0.1
   m_FrameHateDamage: 0.05
   m_MaxColorDamage: {r: 1, g: 1, b: 1, a: 1}
-  m_MinColorDamage: {r: 1, g: 1, b: 1, a: 0.509}
+  m_MinColorDamage: {r: 1, g: 1, b: 1, a: 0}
+--- !u!114 &114136969789063772
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1809977908958368}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ac7d648fd1a52946b7027c32f02d54e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EnemyTag: Player
+  m_gunType: 1
+  m_weakAgaintGunType: 1
 --- !u!114 &114394951003135984
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -370,18 +384,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 995330580e3d6164f89f8331c80e6520, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_speed: 0.02
   m_SensorRadius: 3
-  m_AttackRadius: 1
-  m_RayDistance: 0.4
+  m_AttackRadius: 0.6
+  m_RayDistance: 1
   m_WallLayerMask:
     serializedVersion: 2
     m_Bits: 256
   m_gunAnimator: {fileID: 95641022098194444}
   m_avatarAnimator: {fileID: 95631825590529006}
-  m_EnemyTag: Player
   m_attackField: 0.6
-  m_perimiterPatrol: 2
-  m_curPatrolDir: 0
+  m_attackFrequency: 1
+  m_maxPerimiterPatrol: 2
 --- !u!212 &212062403197883140
 SpriteRenderer:
   m_ObjectHideFlags: 1

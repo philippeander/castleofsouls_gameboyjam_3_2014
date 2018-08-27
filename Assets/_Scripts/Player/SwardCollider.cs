@@ -9,17 +9,17 @@ using UnityEngine;
 
 public class SwardCollider : MonoBehaviour {
     
-    private SwardType m_SwardType; 
+    private GunType m_gunType = new GunType();
     private Collider2D m_Coll;
     [SerializeField]private string m_enemyTag = "";
 
-    public SwardType Sward_Type {
+    public GunType Sward_Type {
         get {
-            return m_SwardType;
+            return m_gunType;
         }
 
         set {
-            m_SwardType = value;
+            m_gunType = value;
         }
     }
     public string EnemyTag {
@@ -37,7 +37,6 @@ public class SwardCollider : MonoBehaviour {
     }
 
     void Start () {
-        m_SwardType = SwardType.white; 
         m_Coll.enabled = false;
 	}
 
@@ -45,8 +44,8 @@ public class SwardCollider : MonoBehaviour {
         m_enemyTag = enemyTag;
     }
 	
-    public void SetAttack(SwardType type) {
-        m_SwardType = type;
+    public void SetAttack(GunType type) {
+        m_gunType = type;
         m_Coll.enabled = true;
     }
 
@@ -55,9 +54,13 @@ public class SwardCollider : MonoBehaviour {
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {
-        if(collision.tag == m_enemyTag) {
+        
+        if(collision.tag == m_enemyTag) {            
             Health health = collision.GetComponent<Health>();
-            health.OnDamage(1, m_SwardType);
+            if (health != null) {
+                health.OnDamage(1, m_gunType);
+            }
+            
         }
     }
 

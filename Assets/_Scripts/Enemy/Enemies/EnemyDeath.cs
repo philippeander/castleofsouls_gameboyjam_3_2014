@@ -5,80 +5,103 @@ using System;
 
 public class EnemyDeath : EnemyAI {
     
-
     [Space(15)]
     [SerializeField] private Animator m_gunAnimator;
     [SerializeField] private Animator m_avatarAnimator;
 
     [Space(15)]
     [Header("PARAMITERS")]
-    [SerializeField] [TagSelector] private string m_EnemyTag;
     [SerializeField] private float m_attackField = 0.6f;
 
     [Space(15)]
     [Header("PATROL")]
-    [SerializeField] private float m_minPrimiterPatrol = 0.1f;
+    [SerializeField] private float m_attackFrequency = 1f;
     [SerializeField] private float m_maxPerimiterPatrol = 2;
+
     private Direction m_curPatrolDir = Direction.down;
     private Vector3 m_startPos = Vector3.zero;
     private float m_curPerimiterPatrol = 0;
     private RaycastDirection m_lastDirectionSelect = new RaycastDirection(Direction.down);
     private RaycastDirection m_newDir = new RaycastDirection(Direction.down);
-
-
+    
     private SwardCollider m_swardCollider;
     private Coroutine m_idleCO;
-    private Coroutine m_chasePlayerCO;
+    private Coroutine m_PersueCO;
+    private Coroutine m_attackCO;
 
     private const string NAME_ATTACK_ANIM = "Attack";
 
     protected override void Awake() {
         base.Awake();
         m_swardCollider = GetComponentInChildren<SwardCollider>();
-        m_swardCollider.Init(m_EnemyTag);
+        ;
         
     }
 
     protected override void Start () {
         base.Start();
         m_startPos = transform.position;
-        OnIdlePatrol();
-        
-
+        m_swardCollider.Init(m_charID.EnemyTag);
     }
 
     
     private void Update() {
-        /*
-        if (IsPlayerAttackArea && 
-            PlayerDistance.y < m_attackField && 
-            PlayerDistance.y > -m_attackField &&
-            !m_gunAnimator.GetCurrentAnimatorStateInfo(0).IsName(NAME_ATTACK_ANIM)) 
+        
+        EnemyManager();
+
+    }
+
+    private void EnemyManager() {
+        MirrorImage();
+
+        if (IsPlayerSeen)
         {
-            m_gunAnimator.SetTrigger(NAME_ATTACK_ANIM);
-            m_swardCollider.SetAttack(SwardType.both);
+            if (IsPlayerAttackArea)
+            {
+                m_curState = EnemyState.attack;
+            }
+            else
+            {
+                m_curState = EnemyState.persue;
+            }
         }
-            
-        if (!m_gunAnimator.GetCurrentAnimatorStateInfo(0).IsName(NAME_ATTACK_ANIM)) {
-            m_swardCollider.FinishAttack();
+        else {
+            m_curState = EnemyState.patrol;
         }
 
-        if (IsPlayerSeen) {
-            bool IsPlayerInMyLeftside = PlayerDistance.x > 0;
-            transform.localScale = new Vector2( IsPlayerInMyLeftside ? 1 : -1 , transform.localScale.y);
-            
-        }
-        */
+        if (m_HistState != m_curState) {
 
-        if (Input.GetKeyUp(KeyCode.N)) {
-            DefineNewPath();
+            switch (m_curState) {
+                case EnemyState.patrol:
+                    OnIdlePatrol();
+                    break;
+                case EnemyState.persue:
+                    Persue();
+                    break;
+                case EnemyState.attack:
+                    OnAttack();
+                    break;
+            }
+
+            m_HistState = m_curState;
         }
 
     }
     
-
     public void OnIdlePatrol() {
         m_idleCO = StartCoroutine(OnIdlePatrol_Coroutine());
+        if(m_PersueCO != null) StopCoroutine(m_PersueCO);
+        if (m_attackCO != null) StopCoroutine(m_attackCO);
+    }
+    public void Persue() {
+        m_PersueCO = StartCoroutine(Persue_Coroutine());
+        if (m_idleCO != null) StopCoroutine(m_idleCO);
+        if (m_attackCO != null) StopCoroutine(m_attackCO);
+    }
+    public void OnAttack() {
+        m_attackCO = StartCoroutine(OnAttack_coroutine());
+        if (m_PersueCO != null) StopCoroutine(m_PersueCO);
+        if (m_idleCO != null) StopCoroutine(m_idleCO);
     }
 
     private IEnumerator OnIdlePatrol_Coroutine() {
@@ -86,6 +109,7 @@ public class EnemyDeath : EnemyAI {
         while (true) {
             
             Vector3 newPos = DefineNewPath();
+            
 
             bool isMovementFinished = false;
             while (!isMovementFinished) {
@@ -102,6 +126,33 @@ public class EnemyDeath : EnemyAI {
             yield return new WaitForEndOfFrame();
         }
 
+    }
+    private IEnumerator Persue_Coroutine() {
+        for(;;)
+        {
+
+            transform.position = Vector2.MoveTowards(transform.position, PlayerObj.position, m_speed);
+
+            yield return new WaitForSeconds(GlobalVariables.FRAME_HATE_COROUTINE);
+        }
+         
+
+    }
+    private IEnumerator OnAttack_coroutine() {
+        while (true) {
+
+            m_gunAnimator.SetTrigger(NAME_ATTACK_ANIM);
+            
+            yield return new WaitUntil(() => m_gunAnimator.GetCurrentAnimatorStateInfo(0).IsName(NAME_ATTACK_ANIM));
+
+            m_swardCollider.SetAttack(m_charID.GunType);
+
+            yield return new WaitUntil(() => !m_gunAnimator.GetCurrentAnimatorStateInfo(0).IsName(NAME_ATTACK_ANIM));
+
+            m_swardCollider.FinishAttack();
+
+            yield return new WaitForSeconds(m_attackFrequency);
+        }
     }
 
     private Vector2 DefineNewPath() {
@@ -140,15 +191,13 @@ public class EnemyDeath : EnemyAI {
                 newPos = new Vector3(
                         UnityEngine.Random.Range(transform.position.x, m_startPos.x + (-m_maxPerimiterPatrol)),// ( X )
                         transform.position.y);  // ( Y )
-
-                transform.localScale = new Vector2(1, transform.localScale.y);
+                
                 break;
             case Direction.right:
                 newPos = new Vector3(
                         UnityEngine.Random.Range(transform.position.x, m_startPos.x + m_maxPerimiterPatrol),// ( X )
                         transform.position.y);  // ( Y )
-
-                transform.localScale = new Vector2(-1, transform.localScale.y);
+                
                 break;
         }
 
@@ -157,28 +206,22 @@ public class EnemyDeath : EnemyAI {
 
         return newPos;
     }
-
-    public void ChasePlayer() {
-        m_chasePlayerCO = StartCoroutine(ChasePlayer_Coroutine());
-    }
-
+    
     public void MirrorImage() {
 
         Vector3 curVel = (transform.position - m_prevLoc) / Time.deltaTime;
 
-        if (curVel.y > 0)
+        if (curVel.x < 0 || (IsPlayerAttackArea && PlayerDistance.x > 0))
         {
-            // it's moving up
+            transform.localScale = new Vector2(1, transform.localScale.y);
         }
-        else
+        else if(curVel.x > 0 || (IsPlayerAttackArea && PlayerDistance.x < 0))
         {
-            // it's moving down
+            transform.localScale = new Vector2(-1, transform.localScale.y);
         }
+
         m_prevLoc = transform.position;
 
     }
-
-    private IEnumerator ChasePlayer_Coroutine() {
-        yield return null;
-    }
+    
 }

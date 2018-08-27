@@ -38,6 +38,7 @@ GameObject:
   - component: {fileID: 4313492215606380}
   - component: {fileID: 61556134875389906}
   - component: {fileID: 50538453513020638}
+  - component: {fileID: 114191506052031906}
   - component: {fileID: 114515826803249784}
   - component: {fileID: 114473321992545110}
   m_Layer: 0
@@ -46,7 +47,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4313492215606380
 Transform:
   m_ObjectHideFlags: 1
@@ -137,6 +138,17 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114191506052031906
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1882201369028756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ac7d648fd1a52946b7027c32f02d54e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114473321992545110
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -148,16 +160,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0942eee0664854a49885de7169dc00ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AttackType: 1
+  m_AttackType: 0
   m_Health: 3
   m_MaxHealth: 3
-  m_IsShakeCam: 1
+  m_IsShakeCam: 0
   m_IsInvencible: 0
   m_IsPlayer: 0
   m_TimeFlashDamage: 0.1
   m_FrameHateDamage: 0.05
   m_MaxColorDamage: {r: 1, g: 1, b: 1, a: 1}
-  m_MinColorDamage: {r: 1, g: 1, b: 1, a: 0.509}
+  m_MinColorDamage: {r: 1, g: 1, b: 1, a: 0}
 --- !u!114 &114515826803249784
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -169,6 +181,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03e8662f2a7b62248b18ed5692d834be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_EnemyTag: Player
+  m_speed: 0.02
+  m_SensorRadius: 3
+  m_AttackRadius: 0.6
+  m_RayDistance: 1
+  m_WallLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!212 &212104749256175662
 SpriteRenderer:
   m_ObjectHideFlags: 1

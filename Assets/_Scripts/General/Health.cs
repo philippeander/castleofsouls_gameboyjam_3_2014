@@ -4,12 +4,10 @@ using UnityEngine;
 
 public class Health : MonoBehaviour {
 
-    [SerializeField] private SwardType m_AttackType;
     [SerializeField] private float m_Health = 3;
     [SerializeField] private float m_MaxHealth = 3;
     [SerializeField] private bool m_IsShakeCam = false;
     [SerializeField] private bool m_IsInvencible = false;
-    [SerializeField] private bool m_IsPlayer = false;
 
     [Space(15)]
     [Header("DAMAGE")]
@@ -18,18 +16,25 @@ public class Health : MonoBehaviour {
     [SerializeField] private Color m_MaxColorDamage = new Color(1f, 1f, 1f, 1f);
     [SerializeField] private Color m_MinColorDamage = new Color(1f, 1f, 1f, 0f);
 
+    private CharID m_charID;
+
     private Coroutine m_FlashDamageCoroutine;
+
+    private void Awake()
+    {
+        m_charID = GetComponent<CharID>();
+    }
 
     void Start () {
 		
 	}
     
 
-    public void OnDamage(float amount, SwardType attackType) {
+    public void OnDamage(float amount, GunType attackType) {
         if (m_IsShakeCam) ScreenShake.Instance.Shake();
         if (m_IsInvencible) return;
 
-        if (attackType == m_AttackType) {
+        if (m_charID.WeakAgaintGunType == attackType || m_charID.WeakAgaintGunType == GunType.both) {
             m_Health -= amount;
             
             if (m_FlashDamageCoroutine != null) {

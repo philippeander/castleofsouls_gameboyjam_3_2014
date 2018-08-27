@@ -39,6 +39,7 @@ GameObject:
   - component: {fileID: 4269068259093742}
   - component: {fileID: 61407523325947258}
   - component: {fileID: 50988403168221560}
+  - component: {fileID: 114776449320816430}
   - component: {fileID: 114276792826876356}
   - component: {fileID: 114195492911112168}
   m_Layer: 0
@@ -47,7 +48,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4075562116488606
 Transform:
   m_ObjectHideFlags: 1
@@ -68,7 +69,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1820716646439414}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.452, y: -2.063, z: 0}
+  m_LocalPosition: {x: 45.52, y: 1.566, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4075562116488606}
@@ -174,16 +175,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0942eee0664854a49885de7169dc00ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AttackType: 1
+  m_AttackType: 0
   m_Health: 3
   m_MaxHealth: 3
-  m_IsShakeCam: 1
+  m_IsShakeCam: 0
   m_IsInvencible: 0
   m_IsPlayer: 0
   m_TimeFlashDamage: 0.1
   m_FrameHateDamage: 0.05
   m_MaxColorDamage: {r: 1, g: 1, b: 1, a: 1}
-  m_MinColorDamage: {r: 1, g: 1, b: 1, a: 0.509}
+  m_MinColorDamage: {r: 1, g: 1, b: 1, a: 0}
 --- !u!114 &114276792826876356
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -193,6 +194,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e642b3eedaa05764f9eadcad8acbc706, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EnemyTag: Player
+  m_speed: 0.02
+  m_SensorRadius: 3
+  m_AttackRadius: 0.6
+  m_RayDistance: 1
+  m_WallLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
+--- !u!114 &114776449320816430
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1820716646439414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ac7d648fd1a52946b7027c32f02d54e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!212 &212910209364144274
@@ -230,7 +250,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 100
-  m_Sprite: {fileID: 21300000, guid: 6ed0838a116291449b0159f6c870ef79, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 796d0b4eedd04a345bc30643a82b31f5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
