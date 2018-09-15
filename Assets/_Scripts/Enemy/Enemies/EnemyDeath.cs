@@ -28,6 +28,7 @@ public class EnemyDeath : EnemyAI {
     private Coroutine m_idleCO;
     private Coroutine m_PersueCO;
     private Coroutine m_attackCO;
+    private Coroutine m_attackAlign;
 
     private const string NAME_ATTACK_ANIM = "Attack";
 
@@ -81,6 +82,9 @@ public class EnemyDeath : EnemyAI {
                 case EnemyState.attack:
                     OnAttack();
                     break;
+                case EnemyState.damage:
+                    OnAttack();
+                    break;
             }
 
             m_HistState = m_curState;
@@ -92,14 +96,17 @@ public class EnemyDeath : EnemyAI {
         m_idleCO = StartCoroutine(OnIdlePatrol_Coroutine());
         if(m_PersueCO != null) StopCoroutine(m_PersueCO);
         if (m_attackCO != null) StopCoroutine(m_attackCO);
+        if (m_attackAlign != null) StopCoroutine(m_attackAlign);
     }
     public void Persue() {
         m_PersueCO = StartCoroutine(Persue_Coroutine());
         if (m_idleCO != null) StopCoroutine(m_idleCO);
         if (m_attackCO != null) StopCoroutine(m_attackCO);
+        if (m_attackAlign != null) StopCoroutine(m_attackAlign);
     }
     public void OnAttack() {
         m_attackCO = StartCoroutine(OnAttack_coroutine());
+        m_attackAlign = StartCoroutine(AttackAlign_Coroutine());
         if (m_PersueCO != null) StopCoroutine(m_PersueCO);
         if (m_idleCO != null) StopCoroutine(m_idleCO);
     }
@@ -152,6 +159,14 @@ public class EnemyDeath : EnemyAI {
             m_swardCollider.FinishAttack();
 
             yield return new WaitForSeconds(m_attackFrequency);
+        }
+    }
+    private IEnumerator AttackAlign_Coroutine() {
+        while (true) {
+
+            transform.position = Vector2.MoveTowards(transform.position, new Vector2(transform.position.x, PlayerObj.position.y), m_speed);
+
+            yield return new WaitForSeconds(GlobalVariables.FRAME_HATE_COROUTINE);
         }
     }
 

@@ -8,4 +8,4 @@ public enum GunType { white, black, both }
 
 public enum Direction { up, down, left, right}
 
-public enum EnemyState { idle, patrol, persue,attack }
+public enum EnemyState { idle, patrol, persue, attack, damage }
