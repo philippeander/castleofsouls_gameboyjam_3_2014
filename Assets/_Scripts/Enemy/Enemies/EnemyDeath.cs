@@ -26,6 +26,7 @@ public class EnemyDeath : EnemyAI {
     private RaycastDirection m_newDir = new RaycastDirection(Direction.down);
     
     private SwardCollider m_swardCollider;
+    private bool m_canAttack = false;
     private Coroutine m_idleCO;
     private Coroutine m_PersueCO;
     private Coroutine m_attackCO;
@@ -91,19 +92,26 @@ public class EnemyDeath : EnemyAI {
     }
     
     public void OnIdlePatrol() {
+        //if (m_attackCO != null) StopCoroutine(m_attackCO);
+        m_canAttack = false;
         m_idleCO = StartCoroutine(OnIdlePatrol_Coroutine());
         if(m_PersueCO != null) StopCoroutine(m_PersueCO);
-        if (m_attackCO != null) StopCoroutine(m_attackCO);
         if (m_attackAlign != null) StopCoroutine(m_attackAlign);
     }
     public void Persue() {
+        //if (m_attackCO != null) StopCoroutine(m_attackCO);
+        m_canAttack = false;
         m_PersueCO = StartCoroutine(Persue_Coroutine());
         if (m_idleCO != null) StopCoroutine(m_idleCO);
-        if (m_attackCO != null) StopCoroutine(m_attackCO);
         if (m_attackAlign != null) StopCoroutine(m_attackAlign);
     }
     public void OnAttack() {
-        m_attackCO = StartCoroutine(OnAttack_coroutine());
+        m_canAttack = true;
+        //if (m_attackCO != null) StopCoroutine(m_attackCO);
+        if (m_attackCO == null)
+        {
+            m_attackCO = StartCoroutine(OnAttack_coroutine());
+        }
         m_attackAlign = StartCoroutine(AttackAlign_Coroutine());
         if (m_PersueCO != null) StopCoroutine(m_PersueCO);
         if (m_idleCO != null) StopCoroutine(m_idleCO);
@@ -145,7 +153,7 @@ public class EnemyDeath : EnemyAI {
 
     }
     private IEnumerator OnAttack_coroutine() {
-        while (true) {
+        while (m_canAttack) {
             if (!GetComponent<Health>().IsDamaged) {
                 yield return new WaitForSeconds(m_attackDelay);
 
@@ -163,6 +171,8 @@ public class EnemyDeath : EnemyAI {
             yield return new WaitForSeconds(m_attackFrequency);
             
         }
+
+        m_attackCO = null;
     }
     private IEnumerator AttackAlign_Coroutine() {
         while (true) {

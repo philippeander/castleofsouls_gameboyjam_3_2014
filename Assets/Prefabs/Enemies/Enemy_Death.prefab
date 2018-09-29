@@ -87,6 +87,7 @@ GameObject:
   - component: {fileID: 61429823838036798}
   - component: {fileID: 50404838302042438}
   - component: {fileID: 114136969789063772}
+  - component: {fileID: 114394850858722456}
   - component: {fileID: 114614032115512528}
   - component: {fileID: 114100677424299448}
   m_Layer: 0
@@ -160,7 +161,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1809977908958368}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 8.75, y: -2.5, z: 0}
+  m_LocalPosition: {x: 3.99, y: -2.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4073484280109308}
@@ -338,15 +339,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0942eee0664854a49885de7169dc00ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Health: 3
-  m_MaxHealth: 3
+  m_MaxHealth: 10
   m_IsShakeCam: 1
   m_IsInvencible: 0
-  m_IsPlayer: 0
   m_TimeFlashDamage: 0.1
   m_FrameHateDamage: 0.05
   m_MaxColorDamage: {r: 1, g: 1, b: 1, a: 1}
   m_MinColorDamage: {r: 1, g: 1, b: 1, a: 0}
+  m_isDamageDeslocation: 1
+  m_speedDemageDesl: 10
+  m_DamageDeslocatonTime: 0.07
+  m_DamageRecoveringTime: 1
+  OnReceiveDamage:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &114136969789063772
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -361,6 +369,18 @@ MonoBehaviour:
   m_EnemyTag: Player
   m_gunType: 1
   m_weakAgaintGunType: 1
+--- !u!114 &114394850858722456
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1809977908958368}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66c35735d5b094d45853257a393c4d5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_spritesRenderer: []
 --- !u!114 &114394951003135984
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -372,7 +392,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53829c192a7df9543a1d195d2aa2ec75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_enemyTag: 
 --- !u!114 &114614032115512528
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -394,6 +413,7 @@ MonoBehaviour:
   m_gunAnimator: {fileID: 95641022098194444}
   m_avatarAnimator: {fileID: 95631825590529006}
   m_attackField: 0.6
+  m_attackDelay: 1
   m_attackFrequency: 1
   m_maxPerimiterPatrol: 2
 --- !u!212 &212062403197883140
@@ -428,8 +448,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 866256041
+  m_SortingLayer: 2
   m_SortingOrder: 101
   m_Sprite: {fileID: 21300000, guid: ad9b5e0357cebd947bc4c9bb3292b5a3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -474,8 +494,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 866256041
+  m_SortingLayer: 2
   m_SortingOrder: 100
   m_Sprite: {fileID: 21300000, guid: 0f2c960311fd7524fbacbf57f1963675, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

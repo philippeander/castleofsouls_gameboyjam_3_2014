@@ -7,7 +7,7 @@ public class Health : MonoBehaviour {
 
     
     [SerializeField] private float m_MaxHealth = 3;
-    [SerializeField] private bool m_IsShakeCam = false;
+    [SerializeField] private bool m_IsShakeCam = true;
     [SerializeField] private bool m_IsInvencible = false;
 
     [Space(15)]
@@ -17,8 +17,8 @@ public class Health : MonoBehaviour {
     [SerializeField] private Color m_MaxColorDamage = new Color(1f, 1f, 1f, 1f);
     [SerializeField] private Color m_MinColorDamage = new Color(1f, 1f, 1f, 0f);
     [SerializeField] private bool m_isDamageDeslocation = false;
-    [SerializeField] private float m_speedDemageDesl = 2f;
-    [SerializeField] private float m_DamageDeslocatonTime = 0.5f;
+    [SerializeField] private float m_speedDemageDesl = 10f;
+    [SerializeField] private float m_DamageDeslocatonTime = 0.07f;
     [SerializeField] private float m_DamageRecoveringTime = 1f;
 
     [Space(15)]
