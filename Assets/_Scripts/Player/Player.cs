@@ -45,10 +45,10 @@ public class Player : MonoBehaviour {
         InputManager.Instance.A_BtnAction += A_Btn;
         InputManager.Instance.B_BtnAction += B_Btn;
 
-        m_CollAttackTop.Init(m_charID.EnemyTag);
-        m_CollAttackDown.Init(m_charID.EnemyTag);
-        m_CollAttackLeft.Init(m_charID.EnemyTag);
-        m_CollAttackRight.Init(m_charID.EnemyTag);
+        m_CollAttackTop.Init(this.gameObject, m_charID.EnemyTag);
+        m_CollAttackDown.Init(this.gameObject, m_charID.EnemyTag);
+        m_CollAttackLeft.Init(this.gameObject, m_charID.EnemyTag);
+        m_CollAttackRight.Init(this.gameObject, m_charID.EnemyTag);
 
 
     }
@@ -117,8 +117,6 @@ public class Player : MonoBehaviour {
             coll = m_CollAttackLeft;
         } else if (m_LestAxisMoviment.x > 0) {  //RIGHT
             coll = m_CollAttackRight;
-        } else {
-            Debug.LogError(MESSAGE_COLLIDER_NOT_FOUND);
         }
         return coll;
     }

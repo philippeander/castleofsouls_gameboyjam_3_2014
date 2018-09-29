@@ -11,7 +11,9 @@ public class SwardCollider : MonoBehaviour {
     
     private GunType m_gunType = new GunType();
     private Collider2D m_Coll;
-    [SerializeField]private string m_enemyTag = "";
+    private string m_enemyTag = "";
+    private GameObject m_fatherObj;
+    
 
     public GunType Sward_Type {
         get {
@@ -40,8 +42,9 @@ public class SwardCollider : MonoBehaviour {
         m_Coll.enabled = false;
 	}
 
-    public void Init(string enemyTag) {
+    public void Init(GameObject fatherObj, string enemyTag) {
         m_enemyTag = enemyTag;
+        m_fatherObj = fatherObj;
     }
 	
     public void SetAttack(GunType type) {
@@ -58,7 +61,9 @@ public class SwardCollider : MonoBehaviour {
         if(collision.tag == m_enemyTag) {            
             Health health = collision.GetComponent<Health>();
             if (health != null) {
-                health.OnDamage(1, m_gunType);
+                health.OnDamage(1, 
+                                m_fatherObj.transform.position, 
+                                m_gunType);
             }
             
         }

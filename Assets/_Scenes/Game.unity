@@ -1256,8 +1256,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 400, y: -960.4457}
-  m_SizeDelta: {x: 800, y: 635.63043}
+  m_AnchoredPosition: {x: 400, y: -960.79254}
+  m_SizeDelta: {x: 800, y: 635.8617}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &474537886
 MonoBehaviour:
@@ -1331,6 +1331,11 @@ Prefab:
     - target: {fileID: 4269068259093742, guid: b1045cfbf38a6d34dbe8cb8acabdebf4, type: 2}
       propertyPath: m_RootOrder
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 114276792826876356, guid: b1045cfbf38a6d34dbe8cb8acabdebf4,
+        type: 2}
+      propertyPath: m_WallLayerMask.m_Bits
+      value: 256
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b1045cfbf38a6d34dbe8cb8acabdebf4, type: 2}
@@ -24892,8 +24897,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 400, y: -321.31522}
-  m_SizeDelta: {x: 800, y: 642.63043}
+  m_AnchoredPosition: {x: 400, y: -321.43085}
+  m_SizeDelta: {x: 800, y: 642.8617}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1905302100
 MonoBehaviour:
@@ -25051,7 +25056,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4395577736278166, guid: 81ed864d01aec134e87b848bfaf993d6, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 8.75
+      value: 3.99
       objectReference: {fileID: 0}
     - target: {fileID: 4395577736278166, guid: 81ed864d01aec134e87b848bfaf993d6, type: 2}
       propertyPath: m_LocalPosition.y
@@ -25080,6 +25085,31 @@ Prefab:
     - target: {fileID: 4395577736278166, guid: 81ed864d01aec134e87b848bfaf993d6, type: 2}
       propertyPath: m_RootOrder
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 114100677424299448, guid: 81ed864d01aec134e87b848bfaf993d6,
+        type: 2}
+      propertyPath: m_isDamageDeslocation
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114100677424299448, guid: 81ed864d01aec134e87b848bfaf993d6,
+        type: 2}
+      propertyPath: m_speedDemageDesl
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114100677424299448, guid: 81ed864d01aec134e87b848bfaf993d6,
+        type: 2}
+      propertyPath: m_DamageDeslocatonTime
+      value: 0.07
+      objectReference: {fileID: 0}
+    - target: {fileID: 114100677424299448, guid: 81ed864d01aec134e87b848bfaf993d6,
+        type: 2}
+      propertyPath: m_MaxHealth
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114100677424299448, guid: 81ed864d01aec134e87b848bfaf993d6,
+        type: 2}
+      propertyPath: m_FrameHateDamage
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 81ed864d01aec134e87b848bfaf993d6, type: 2}

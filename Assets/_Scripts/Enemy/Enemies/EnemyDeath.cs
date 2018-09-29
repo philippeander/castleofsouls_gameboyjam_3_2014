@@ -15,6 +15,7 @@ public class EnemyDeath : EnemyAI {
 
     [Space(15)]
     [Header("PATROL")]
+    [SerializeField] private float m_attackDelay = 1f;
     [SerializeField] private float m_attackFrequency = 1f;
     [SerializeField] private float m_maxPerimiterPatrol = 2;
 
@@ -42,7 +43,7 @@ public class EnemyDeath : EnemyAI {
     protected override void Start () {
         base.Start();
         m_startPos = transform.position;
-        m_swardCollider.Init(m_charID.EnemyTag);
+        m_swardCollider.Init(this.gameObject, m_charID.EnemyTag);
     }
 
     
@@ -70,7 +71,7 @@ public class EnemyDeath : EnemyAI {
             m_curState = EnemyState.patrol;
         }
 
-        if (m_HistState != m_curState) {
+        if (m_HistState != m_curState && !GetComponent<Health>().IsDamaged) {
 
             switch (m_curState) {
                 case EnemyState.patrol:
@@ -80,9 +81,6 @@ public class EnemyDeath : EnemyAI {
                     Persue();
                     break;
                 case EnemyState.attack:
-                    OnAttack();
-                    break;
-                case EnemyState.damage:
                     OnAttack();
                     break;
             }
@@ -110,6 +108,7 @@ public class EnemyDeath : EnemyAI {
         if (m_PersueCO != null) StopCoroutine(m_PersueCO);
         if (m_idleCO != null) StopCoroutine(m_idleCO);
     }
+    
 
     private IEnumerator OnIdlePatrol_Coroutine() {
         
@@ -147,18 +146,22 @@ public class EnemyDeath : EnemyAI {
     }
     private IEnumerator OnAttack_coroutine() {
         while (true) {
+            if (!GetComponent<Health>().IsDamaged) {
+                yield return new WaitForSeconds(m_attackDelay);
 
-            m_gunAnimator.SetTrigger(NAME_ATTACK_ANIM);
-            
-            yield return new WaitUntil(() => m_gunAnimator.GetCurrentAnimatorStateInfo(0).IsName(NAME_ATTACK_ANIM));
+                m_gunAnimator.SetTrigger(NAME_ATTACK_ANIM);
 
-            m_swardCollider.SetAttack(m_charID.GunType);
+                yield return new WaitUntil(() => m_gunAnimator.GetCurrentAnimatorStateInfo(0).IsName(NAME_ATTACK_ANIM));
 
-            yield return new WaitUntil(() => !m_gunAnimator.GetCurrentAnimatorStateInfo(0).IsName(NAME_ATTACK_ANIM));
+                m_swardCollider.SetAttack(m_charID.GunType);
 
-            m_swardCollider.FinishAttack();
+                yield return new WaitUntil(() => !m_gunAnimator.GetCurrentAnimatorStateInfo(0).IsName(NAME_ATTACK_ANIM));
+
+                m_swardCollider.FinishAttack();
+            }
 
             yield return new WaitForSeconds(m_attackFrequency);
+            
         }
     }
     private IEnumerator AttackAlign_Coroutine() {
@@ -170,6 +173,7 @@ public class EnemyDeath : EnemyAI {
         }
     }
 
+    
     private Vector2 DefineNewPath() {
         Vector3 newPos = m_startPos;
 
@@ -223,6 +227,7 @@ public class EnemyDeath : EnemyAI {
     }
     
     public void MirrorImage() {
+        
 
         Vector3 curVel = (transform.position - m_prevLoc) / Time.deltaTime;
 
